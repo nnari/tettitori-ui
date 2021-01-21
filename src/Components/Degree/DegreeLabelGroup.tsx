@@ -7,20 +7,24 @@ interface Props {
   limit?: number
 }
 
+let style = {
+  marginTop: "1em"
+}
+
 export const DegreeLabelGroup = ({ degrees, limit = 5}: Props) => {
     if(degrees.length > limit) {
         let limited = degrees.slice(0, limit).map((d) =>
             <DegreeLabel labelTitle={d.title}/>
         )
         return (
-            <Label.Group>
+            <Label.Group style={style}>
             {limited} ... {degrees.length - limit} liitettyä tutkintoa lisää
             </Label.Group>
         )
     }
 
   return (
-    <Label.Group size='small'>
+    <Label.Group style={style} size='small'>
       {degrees.map(d => <DegreeLabel labelTitle={d.title}/>)}
     </Label.Group>
   )

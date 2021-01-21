@@ -6,14 +6,14 @@ interface Props {
     job: Job
 }
 
-export const JobView = ({ job }: Props) => {
+export const JobListItem = ({ job }: Props) => {
     return (
         <>
             <Segment>
                 <Header as='h2'>{job.title}</Header>
                 <Divider />
                 <p>{job.body.description}</p>
-                <DegreeLabelGroup degrees={job.relevantDegrees} limit={8}/>
+                <DegreeLabelGroup degrees={job.relevantDegrees} limit={100}/>
             </Segment>
         </>
     );

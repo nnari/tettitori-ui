@@ -1,5 +1,5 @@
 import React from 'react';
-import { JobView } from './JobView';
+import { JobListItem } from './JobListItem';
 import { Container } from 'semantic-ui-react';
 
 
@@ -7,10 +7,10 @@ interface Props {
     jobs: Job[]
 }
 
-export const JobListView = ({jobs}: Props) => {
+export const JobListGroup = ({jobs}: Props) => {
     return (
         <Container fluid>
-            {jobs.map((job: Job) => <JobView job={job}/>)}
+            {jobs.map((job: Job) => <JobListItem job={job}/>)}
         </Container>
     );
 }

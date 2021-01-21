@@ -5,6 +5,8 @@ declare interface User {
     iat: Number
 }
 
+declare module '*.jpg';
+
 declare interface Degree {
     _id: string,
     title: string,
