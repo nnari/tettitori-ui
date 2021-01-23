@@ -10,7 +10,7 @@ interface Props {
 export const JobListGroup = ({jobs}: Props) => {
     return (
         <Container fluid>
-            {jobs.map((job: Job) => <JobListItem job={job}/>)}
+            {jobs.map((job: Job) => <JobListItem job={job}/>).sort()}
         </Container>
     );
 }

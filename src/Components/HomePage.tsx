@@ -6,7 +6,8 @@ import {
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 import { JobListGroup } from './JobListGroup';
 
@@ -22,9 +23,11 @@ interface Props {
   jobs: Job[],
   loading: boolean,
   user: User,
+  isAuthenticated: boolean,
 }
 
-const HomepageLayout = ({ handleAccessToken, jobs, user, handleLogOut }: Props) => {
+const HomepageLayout = ({ handleAccessToken, jobs, user, handleLogOut, isAuthenticated }: Props) => {
+  console.log("Props in HomePage: ", isAuthenticated);
   return (
     <div className="wrapper">
       <Router>
@@ -36,13 +39,14 @@ const HomepageLayout = ({ handleAccessToken, jobs, user, handleLogOut }: Props) 
         {/* idk let's try a banner here */}
         <Hero />
         <Switch>
-          <Route path='/profile'>
-            <JobEditView jobs={jobs} user={user} />
-          </Route>
+          <Route path='/profile' render={() =>
+              isAuthenticated
+              ? <JobEditView jobs={jobs} user={user} />
+              : <Redirect to='/' />} />
           <Route path='/'>
             <Container style={{ marginTop: '2em' }}>
-              <Header as='h1'>Hämeenlinnan Tettitorissa listatut työssäoppipaikat</Header>
-              <p>Fixed container</p>
+              <Header as='h1'>Hämeenlinnan Tettilässä listatut työssäoppipaikat</Header>
+              <Header as='h2'>Tettilä on Hämeenlinnan ja lähiseudun nuorille tarkoitettu palvelu josta voit löytää itsellesi TET-paikan.</Header>
               <p>
                 Single column paragraph
               </p>

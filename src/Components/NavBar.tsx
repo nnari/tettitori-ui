@@ -18,7 +18,7 @@ export const NavBar = ({ position, handleAccessToken, user, handleLogOut }: Prop
       <Container>
         <Link to="/">
           <Menu.Item as='a' header>
-            Tettitori
+            Tettilä
               </Menu.Item>
         </Link>
         <Link to="/"><Menu.Item as='a'>Paikat</Menu.Item></Link>

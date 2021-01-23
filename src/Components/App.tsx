@@ -11,6 +11,7 @@ const App = () => {
   const [user, setUser] = useState<User>();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   
   useEffect(() => {
     JobService.getAllJobs().then(jobs => {
@@ -25,12 +26,9 @@ const App = () => {
       const userJson: unknown = localStorage.getItem('user');
       const user = JSON.parse(userJson as string);
       setUser(user as User)
+      setIsAuthenticated(true);
     }
   }, []);
-
-  useEffect(() => {
-    console.log("User state changed");
-  }, [user])
 
   function handleAccessToken(accessToken: string) {
     try {
@@ -41,6 +39,7 @@ const App = () => {
       }
       setUser(decodedJwt as User);
       localStorage.setItem("user", JSON.stringify(decodedJwt));
+      setIsAuthenticated(true);
     } catch (e: any) {
       console.log("Decoding JWT failed.");
     }
@@ -49,6 +48,8 @@ const App = () => {
   function handleLogOut() {
     console.log("User logged out!");
     setUser({} as User);
+    setIsAuthenticated(false);
+    console.log("SET HERE!!!!")
     localStorage.removeItem("user");
   }
 
@@ -60,6 +61,7 @@ const App = () => {
       jobs={jobs}
       loading
       handleLogOut={handleLogOut}
+      isAuthenticated={isAuthenticated}
       />
     </div>
   )
