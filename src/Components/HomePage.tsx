@@ -16,6 +16,7 @@ import { NavBar } from './NavBar';
 import { Footer } from './Footer';
 import { JobEditView } from './JobEditView';
 import { Hero } from './Hero'
+import { Snackbar } from './Snackbar';
 
 interface Props {
   handleAccessToken: (accessToken: string) => void,
@@ -57,6 +58,7 @@ const HomepageLayout = ({ handleAccessToken, jobs, degrees, user, handleLogOut, 
         </Switch>
         <Footer />
       </Router>
+      <Snackbar timeout={6000}/>
     </div>
   )
 }

@@ -14,23 +14,6 @@ interface Props {
   user: User,
 }
 
-const onSubmit = () => {
-  console.log("fuck");
-};
-
-const init = (initialJobs: Job[]) => {
-  return initialJobs.map((job: Job, idx: number) => (
-    {
-      relevantDegrees: job.relevantDegrees,
-      description: job.body.description,
-      contactInfo: job.body.contactInfo,
-      address: job.body.address,
-      title: job.title,
-      id: job._id ?? idx
-    }
-  ))
-}
-
 type Action =
   | { type: 'update' }
   | { type: 'add' }
@@ -56,8 +39,22 @@ const reducer = (state: any, action: Action) => {
 }
 
 export const JobEditView = ({ jobs, degrees, user }: Props) => {
+  const init = (initialJobs: Job[]) => {
+    return initialJobs
+    .filter(j => j.authorDisplayName === user.username)
+    .map((job: Job, idx: number) => (
+      {
+        relevantDegrees: job.relevantDegrees,
+        description: job.body.description,
+        contactInfo: job.body.contactInfo,
+        address: job.body.address,
+        title: job.title,
+        id: job._id ?? idx
+      }
+      ))
+    }
+    
   const [state, dispatch] = useReducer(reducer, jobs, init);
-
   const handleDelete = (action: Action) => {
     return dispatch(action);
   }

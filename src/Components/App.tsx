@@ -6,6 +6,7 @@ import decodejwt, { InvalidTokenError } from 'jwt-decode';
 import JobService from '../Services/JobService';
 import DegreeService from '../Services/DegreeService';
 import { Console } from 'console';
+import { snackbarNotify } from './Snackbar';
 
 const App = () => {
   //We want to be storing global state here
@@ -21,18 +22,16 @@ const App = () => {
     })
     DegreeService.getAllDegrees().then(degrees => {
       setDegrees(degrees);
-    }) 
-  }, [])
-
-  //Check localStorage for user data before log in
-  useEffect(() => {
+    })
+    //Check localStorage for user
     if(localStorage.getItem('user')) {
       const userJson: unknown = localStorage.getItem('user');
-      const user = JSON.parse(userJson as string);
-      setUser(user as User)
+      const user = JSON.parse(userJson as string) as User;
+      snackbarNotify("Tervetuloa Tettilään, " + user?.username);
+      setUser(user)
       setIsAuthenticated(true);
     }
-  }, []);
+  }, [])
 
   function handleAccessToken(accessToken: string) {
     try {
@@ -50,11 +49,10 @@ const App = () => {
   }
 
   function handleLogOut() {
-    console.log("User logged out!");
     setUser({} as User);
     setIsAuthenticated(false);
-    console.log("SET HERE!!!!")
     localStorage.removeItem("user");
+    snackbarNotify("Olet kirjautunut ulos.")
   }
 
   return (

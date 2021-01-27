@@ -4,6 +4,7 @@ import {
 } from 'formik';
 import { SyntheticEvent } from 'react';
 import JobService from '../Services/JobService';
+import { snackbarNotify } from './Snackbar';
 
 //We're gonna need Yup for validation
 import * as Yup from 'yup';
@@ -28,15 +29,15 @@ const {title: t, description: d, contactInfo: c} = jobSchemaValues;
 const JobSchema = Yup.object().shape({
     title: Yup.string()
       .min(t.min, `Otsikko on liian lyhyt! ${t.min}-${t.max} merkkiä.`)
-      .max(50, `Otsikko on liian pitkä! ${t.min}-${t.max} merkkiä.`)
+      .max(t.max, `Otsikko on liian pitkä! ${t.min}-${t.max} merkkiä.`)
       .required(`Otsikko on pakollinen`),
     description: Yup.string()
-      .min(15, `Kuvaus on liian lyhyt. ${d.min}-${d.max} merkkiä.`)
-      .max(1000, `Kuvaus on liian pitkä. ${d.min}-${d.max} merkkiä.`)
+      .min(d.min, `Kuvaus on liian lyhyt. ${d.min}-${d.max} merkkiä.`)
+      .max(d.max, `Kuvaus on liian pitkä. ${d.min}-${d.max} merkkiä.`)
       .required(`Kuvaus on pakollinen`),
     contactInfo: Yup.string()
-    .min(2, `Yhteystiedot ovat liian lyhyet. ${c.min}-${c.max} merkkiä.`)
-    .max(200, `Yhteystiedot ovat liian pitkät! ${c.min}-${c.max} merkkiä.`)
+    .min(d.min, `Yhteystiedot ovat liian lyhyet. ${c.min}-${c.max} merkkiä.`)
+    .max(d.max, `Yhteystiedot ovat liian pitkät! ${c.min}-${c.max} merkkiä.`)
     .required(`Yhteystiedot ovat pakolliset`)
   });
   
@@ -73,6 +74,7 @@ export const JobAddForm = ({ degrees, user }: Props) => {
                 }
             }
             JobService.postNewJob(data, user);
+            snackbarNotify("Uusi tettipaikka lisätty.");
         },
     });
     return (
