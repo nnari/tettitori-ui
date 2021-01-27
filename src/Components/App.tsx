@@ -4,20 +4,24 @@ import decodejwt, { InvalidTokenError } from 'jwt-decode';
 
 //Import services
 import JobService from '../Services/JobService';
+import DegreeService from '../Services/DegreeService';
 import { Console } from 'console';
 
 const App = () => {
   //We want to be storing global state here
   const [user, setUser] = useState<User>();
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [degrees, setDegrees] = useState<Degree[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   
   useEffect(() => {
     JobService.getAllJobs().then(jobs => {
       setJobs(jobs);
-      setLoading(false);
     })
+    DegreeService.getAllDegrees().then(degrees => {
+      setDegrees(degrees);
+    }) 
   }, [])
 
   //Check localStorage for user data before log in
@@ -59,6 +63,7 @@ const App = () => {
       user={user as User}
       handleAccessToken={handleAccessToken}
       jobs={jobs}
+      degrees={degrees}
       loading
       handleLogOut={handleLogOut}
       isAuthenticated={isAuthenticated}

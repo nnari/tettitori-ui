@@ -6,7 +6,18 @@ class JobService {
     return axios.get(JOB_URL).then(response => {
         return response.data
     });
-    
+  }
+  postNewJob = (data: any, user: User): Promise<Job[]> => {
+    let config = {
+      headers: {
+        "Authorization": "Basic " + user.accessToken,
+      }
+    }
+
+    return axios.post(JOB_URL, data, config).then(response => {
+      console.log(response);
+      return response.data
+    })
   }
 }
 

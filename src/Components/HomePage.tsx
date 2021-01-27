@@ -21,12 +21,13 @@ interface Props {
   handleAccessToken: (accessToken: string) => void,
   handleLogOut: () => void,
   jobs: Job[],
+  degrees: Degree[],
   loading: boolean,
   user: User,
   isAuthenticated: boolean,
 }
 
-const HomepageLayout = ({ handleAccessToken, jobs, user, handleLogOut, isAuthenticated }: Props) => {
+const HomepageLayout = ({ handleAccessToken, jobs, degrees, user, handleLogOut, isAuthenticated }: Props) => {
   console.log("Props in HomePage: ", isAuthenticated);
   return (
     <div className="wrapper">
@@ -41,7 +42,7 @@ const HomepageLayout = ({ handleAccessToken, jobs, user, handleLogOut, isAuthent
         <Switch>
           <Route path='/profile' render={() =>
               isAuthenticated
-              ? <JobEditView jobs={jobs} user={user} />
+              ? <JobEditView jobs={jobs} degrees={degrees} user={user} />
               : <Redirect to='/' />} />
           <Route path='/'>
             <Container style={{ marginTop: '2em' }}>
