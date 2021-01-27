@@ -8,19 +8,36 @@ import JobService from '../Services/JobService';
 //We're gonna need Yup for validation
 import * as Yup from 'yup';
 
+const jobSchemaValues = {
+    title: {
+        min: 3,
+        max: 50,
+    },
+    description: {
+        min: 3,
+        max: 1000,
+    },
+    contactInfo: {
+        min: 3,
+        max: 200,
+    }
+}
+
+const {title: t, description: d, contactInfo: c} = jobSchemaValues;
+
 const JobSchema = Yup.object().shape({
     title: Yup.string()
-      .min(2, 'Otsikko on liian lyhyt!')
-      .max(50, 'Otsikko on liian pitkä!')
-      .required('Otsikko on pakollinen'),
+      .min(t.min, `Otsikko on liian lyhyt! ${t.min}-${t.max} merkkiä.`)
+      .max(50, `Otsikko on liian pitkä! ${t.min}-${t.max} merkkiä.`)
+      .required(`Otsikko on pakollinen`),
     description: Yup.string()
-      .min(15, 'Kuvaus on liian lyhyt.')
-      .max(1000, 'Kuvaus on liian pitkä.')
-      .required('Kuvaus on pakollinen'),
+      .min(15, `Kuvaus on liian lyhyt. ${d.min}-${d.max} merkkiä.`)
+      .max(1000, `Kuvaus on liian pitkä. ${d.min}-${d.max} merkkiä.`)
+      .required(`Kuvaus on pakollinen`),
     contactInfo: Yup.string()
-    .min(2, "Yhteystiedot ovat liian lyhyet.")
-    .max(200, "Yhteystiedot ovat liian pitkät!")
-    .required("Yhteystiedot ovat pakolliset")
+    .min(2, `Yhteystiedot ovat liian lyhyet. ${c.min}-${c.max} merkkiä.`)
+    .max(200, `Yhteystiedot ovat liian pitkät! ${c.min}-${c.max} merkkiä.`)
+    .required(`Yhteystiedot ovat pakolliset`)
   });
   
 
