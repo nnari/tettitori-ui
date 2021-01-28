@@ -32,10 +32,6 @@ const Snackbar = ({ timeout = 6000 }: Props) => {
     snackbarNotify = openWithMessage;
     return visible ? (
         <Segment inverted style={css}>
-{/*             <Message
-            positive={true}
-            style={css}
-        > */}
             <b>
                 {message}
             </b>

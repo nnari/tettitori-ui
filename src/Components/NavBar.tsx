@@ -21,7 +21,7 @@ export const NavBar = ({ position, handleAccessToken, user, handleLogOut }: Prop
             Tettilä
               </Menu.Item>
         </Link>
-        <Link to="/"><Menu.Item as='a'>Paikat</Menu.Item></Link>
+        <Link to="/paikat"><Menu.Item as='a'>Paikat</Menu.Item></Link>
         {user?.accessToken && (
           <Link to="/profile"><Menu.Item as='a'><b>Muokkaa oman paikan tietoja</b></Menu.Item></Link>
         )}

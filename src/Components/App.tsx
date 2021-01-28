@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import HomePage from './HomePage';
+import ListPageLayout from './ListPageLayout';
 import decodejwt, { InvalidTokenError } from 'jwt-decode';
 
 //Import services
@@ -57,7 +57,7 @@ const App = () => {
 
   return (
     <div>
-      <HomePage
+      <ListPageLayout
       user={user as User}
       handleAccessToken={handleAccessToken}
       jobs={jobs}

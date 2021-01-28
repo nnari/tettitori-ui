@@ -1,4 +1,5 @@
 import axios from "axios";
+import { snackbarNotify } from "../Components/Snackbar";
 import { JOB_URL } from '../Utility/Endpoints';
 
 class JobService {
@@ -10,14 +11,29 @@ class JobService {
   postNewJob = (data: any, user: User): Promise<Job[]> => {
     let config = {
       headers: {
-        "Authorization": "Basic " + user.accessToken,
+        "Authorization": "Bearer " + user.accessToken,
       }
     }
 
     return axios.post(JOB_URL, data, config).then(response => {
-      console.log(response);
+      snackbarNotify(`Uusi tettipaikka lisätty: ${data?.title}`)
       return response.data
     })
+  }
+  deleteJob = (id: string, user: User): void=> {
+    console.log("deleteJob call");
+    let config = {
+      headers: {
+        "Authorization": "Bearer " + user.accessToken,
+      }
+    }
+    
+    axios.delete(`${JOB_URL}?id=${id}`, config).then(response => {
+      snackbarNotify(`Tettipaikka poistettu.`);
+    }).catch(e => {
+      console.log(e);
+    })
+
   }
 }
 

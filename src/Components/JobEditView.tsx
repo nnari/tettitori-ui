@@ -7,6 +7,7 @@ import {
 
 //Import JobAddForm component
 import { JobAddForm } from './JobAddForm';
+import JobService from '../Services/JobService';
 
 interface Props {
   jobs: Job[],
@@ -19,44 +20,48 @@ type Action =
   | { type: 'add' }
   | { type: 'remove', payload: any };
 
-const reducer = (state: any, action: Action) => {
-  switch (action.type) {
-    case 'remove':
-      console.log(`payload id: ${action.payload.id}`)
-      return state.filter((job: any) => job.id !== action.payload.id);
-    case 'add':
-      console.log('add event');
+  const reducer = (state: any, action: Action) => {
+    console.log("call in reducer");
+    switch (action.type) {
+      case 'remove':
+        return state.filter((job: any) => job.id !== action.payload.id);
+      case 'add':
+        console.log('add event');
 
-      return [
-        ...state,
-        {
-          title: "Uusi tettipaikka",
-          body: "Uuden tettipaikan kuvaus",
-          id: state.length,
-        }
-      ]
+        return [
+          ...state,
+          {
+            title: "Uusi tettipaikka",
+            body: "Uuden tettipaikan kuvaus",
+            id: state.length,
+          }
+        ]
+    }
   }
-}
 
 export const JobEditView = ({ jobs, degrees, user }: Props) => {
   const init = (initialJobs: Job[]) => {
     return initialJobs
-    .filter(j => j.authorDisplayName === user.username)
-    .map((job: Job, idx: number) => (
-      {
-        relevantDegrees: job.relevantDegrees,
-        description: job.body.description,
-        contactInfo: job.body.contactInfo,
-        address: job.body.address,
-        title: job.title,
-        id: job._id ?? idx
-      }
+      .filter(j => j.authorDisplayName === user.username)
+      .map((job: Job, idx: number) => (
+        {
+          relevantDegrees: job.relevantDegrees,
+          description: job.body.description,
+          contactInfo: job.body.contactInfo,
+          address: job.body.address,
+          title: job.title,
+          id: job._id ?? idx
+        }
       ))
-    }
-    
+  }
+
   const [state, dispatch] = useReducer(reducer, jobs, init);
-  const handleDelete = (action: Action) => {
-    return dispatch(action);
+
+  const handleDelete = (e: Event, action: Action) => {
+    dispatch(action);
+    if(action.type === 'remove') {
+      JobService.deleteJob(action.payload.id, user);
+    }
   }
 
   return (
@@ -68,10 +73,10 @@ export const JobEditView = ({ jobs, degrees, user }: Props) => {
       {
         state.map((job: any, idx: number) => (
           <Segment key={job.id}>
-              <Header as='h1'>{job.title}</Header>
-              <Divider />
-              <p>{job.description}</p>
-              <Button color='red' onClick={() => handleDelete({ type: 'remove', payload: { id: job.id } })}>Poista tämä tettipaikka</Button>
+            <Header as='h1'>{job.title}</Header>
+            <Divider />
+            <p>{job.description}</p>
+            <Button color='red' onClick={(e: any) => handleDelete(e, { type: 'remove', payload: { id: job.id } })}>Poista tämä tettipaikka</Button>
           </Segment>
         ))
       }
