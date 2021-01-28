@@ -70,7 +70,7 @@ export const JobEditView = ({ jobs, degrees, user }: Props) => {
       <JobAddForm degrees={degrees} user={user} />
       <Divider />
       <Header as='h1'>Omat listatut tettipaikat</Header>
-      {
+      {state.length !== 0 ? 
         state.map((job: any, idx: number) => (
           <Segment key={job.id}>
             <Header as='h1'>{job.title}</Header>
@@ -79,6 +79,7 @@ export const JobEditView = ({ jobs, degrees, user }: Props) => {
             <Button color='red' onClick={(e: any) => handleDelete(e, { type: 'remove', payload: { id: job.id } })}>Poista tämä tettipaikka</Button>
           </Segment>
         ))
+        : <p>Et ole vielä lisännyt yhtään tettipaikkaa. Voit lisätä uuden tettipaikan käyttämällä sivun yläosassa sijaitsevaa kenttää.</p>
       }
     </Container >
   );

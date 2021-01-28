@@ -1,5 +1,8 @@
 import React from "react"
-import { Container, Divider, Header, Segment, Image } from 'semantic-ui-react'
+import {
+    Link
+} from 'react-router-dom';
+import { Container, Divider, Header, Segment, Image, Button } from 'semantic-ui-react'
 
 /* Import images we will use in this component
    Slightly dirty, but we aren't dealing with that many images.
@@ -13,24 +16,15 @@ export const FrontPage = () => {
         <Container style={{ marginTop: '2em' }}>
             <Header as='h1' style={{ fontSize: '4.5em', textAlign: 'center' }}>Tettilä</Header>
             <Divider />
-            <Segment clearing>
-                <Image src={Img1} size='large' floated='left' />
+            <Segment clearing id='frontpage-info'>
+                <Image src={Img1} size='medium' floated='left' />
                 <p>
-                    <b>Tettilä</b> on helppo tapa löytää itsellesi työelämän tutustumisjakso. Palvelussa Hämeen alueen yritykset voivat listata
+                <b>Tettilä</b> on Hämeenlinnan ja lähiseudun nuorille tarkoitettu palvelu josta voit löytää itsellesi TET-paikan. 
                 </p>
                 <p>
-                    Audiam quaerendum eu sea, pro omittam definiebas ex. Te est latine
-                    definitiones. Quot wisi nulla ex duo. Vis sint solet expetenda ne, his te
-                    phaedrum referrentur consectetuer. Id vix fabulas oporteat, ei quo vide
-                    phaedrum, vim vivendum maiestatis in.
+                Palvelussa Hämeen alueen yritykset voivat listata mahdolliset tettipaikat sekä niihin liittyvää informaatiota.
                 </p>
-                <p>
-                    Eu quo homero blandit intellegebat. Incorrupte consequuntur mei id. Mei ut
-                    facer dolores adolescens, no illum aperiri quo, usu odio brute at. Qui te
-                    porro electram, ea dico facete utroque quo. Populo quodsi te eam, wisi
-                    everti eos ex, eum elitr altera utamur at. Quodsi convenire mnesarchum eu
-                    per, quas minimum postulant per id.
-                </p>
+                <Link to="/paikat"><Button size='large' color='blue'>Siirry TET-paikkojen katseluun</Button></Link>
             </Segment>
 
         </Container >
