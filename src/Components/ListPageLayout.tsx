@@ -15,9 +15,11 @@ import { JobListGroup } from './JobListGroup';
 import { NavBar } from './NavBar';
 import { Footer } from './Footer';
 import { JobEditView } from './JobEditView';
+import { JobFullView } from './JobFullView';
 import { Hero } from './Hero'
 import { Snackbar } from './Snackbar';
 import { FrontPage } from './FrontPage';
+
 
 interface Props {
   handleAccessToken: (accessToken: string) => void,
@@ -42,6 +44,11 @@ const ListPageLayout = ({ handleAccessToken, jobs, degrees, user, handleLogOut, 
         {/* idk let's try a banner here */}
         <Hero />
         <Switch>
+        <Route path='/paikka' render={() => (
+          <Container style={{ marginTop: '2em' }}>
+          <JobFullView />
+        </Container>
+        )}/>
         <Route path='/paikat' render={() => (
           <Container style={{ marginTop: '2em' }}>
           <Header as='h1'>Hämeenlinnan Tettilässä listatut työssäoppipaikat</Header>

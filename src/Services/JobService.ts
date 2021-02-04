@@ -8,6 +8,14 @@ class JobService {
         return response.data
     });
   }
+  getSingleJob = (id: string | null): Promise<Job> | null => {
+    if(id) {
+      return axios.get(`${JOB_URL}?id=${id}`).then(response => {
+        return response.data;
+      })
+    }
+    return null;
+  }
   postNewJob = (data: any, user: User): Promise<Job[]> => {
     let config = {
       headers: {
