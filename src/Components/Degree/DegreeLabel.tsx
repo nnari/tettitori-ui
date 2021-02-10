@@ -1,14 +1,10 @@
-import React from 'react'
-import { Label, Icon, LabelProps } from 'semantic-ui-react';
+import React from "react";
+import { Label, Icon, LabelProps } from "semantic-ui-react";
 
 interface Props {
-  labelTitle: String,
+  labelTitle: String;
 }
 
 export const DegreeLabel = ({ labelTitle }: Props) => {
-  return (
-    <Label>
-      {labelTitle}
-    </Label>
-  )
-}
+  return <Label>{labelTitle}</Label>;
+};
