@@ -5,7 +5,6 @@ import { ActivityOrientationLabel } from "./ActivityOrientationLabel";
 
 interface Props {
   activityOrientations: ActivityOrientation[];
-  labelComponent: JsxChild;
   limit?: number;
 }
 
