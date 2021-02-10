@@ -1,12 +1,36 @@
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 p {
-    font-size: 1.1em;
+  font-size: 1.1em;
 }
 
 #frontpage-info p {
-    font-size: 1.5em;
+  font-size: 1.5em;
+}
+
+.ui.segment.snackbar {
+  min-width: 300px;
+  border-left: solid 15px !important;
+  border-color: #32cd32 !important;
+  border-radius: 0;
+  font-size: 1.1em;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 100;
+}
+
+.ui.segment.snackbar-fade-out {
+  min-width: 300px;
+  border-left: solid 15px;
+  border-color: #32cd32;
+  border-radius: 0 !important;
+  font-size: 1.1em;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 100;
 }
