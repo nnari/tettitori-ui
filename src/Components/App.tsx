@@ -48,7 +48,7 @@ const App = () => {
       setUser(decodedJwt as User);
       localStorage.setItem("user", JSON.stringify(decodedJwt));
       setIsAuthenticated(true);
-    } catch (e: any) {
+    } catch (e) {
       console.log("Decoding JWT failed.");
     }
   }

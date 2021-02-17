@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Header, Image } from "semantic-ui-react";
 import {
   BrowserRouter as Router,
@@ -16,6 +16,7 @@ import { JobFullView } from "./JobFullView";
 import { Hero } from "./Hero";
 import { Snackbar } from "./Snackbar";
 import { FrontPage } from "./FrontPage";
+import Searchbar from "./Searchbar";
 
 interface Props {
   handleAccessToken: (accessToken: string) => void;
@@ -37,6 +38,8 @@ const ListPageLayout = ({
   isAuthenticated,
   orientations,
 }: Props) => {
+  const [filtered, setFiltered] = useState<Job[]>([]);
+
   console.log("Props in HomePage: ", isAuthenticated);
   return (
     <div className="wrapper">
@@ -69,7 +72,12 @@ const ListPageLayout = ({
                   Tettilä on Hämeenlinnan ja lähiseudun nuorille tarkoitettu
                   palvelu josta voit löytää itsellesi TET-paikan.
                 </Header>
-                <JobListGroup jobs={jobs} />
+                <Searchbar
+                  orientations={orientations}
+                  jobs={jobs}
+                  setFiltered={setFiltered}
+                />
+                <JobListGroup jobs={filtered.length > 0 ? filtered : jobs} />
               </Container>
             )}
           />
