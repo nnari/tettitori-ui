@@ -21,15 +21,24 @@ declare interface ActivityOrientation {
 }
 
 declare interface Job {
-  _id: string;
   title: string;
-  relevantDegrees: Degree[];
-  relevantOrientations: ActivityOrientation[];
   authorDisplayName: string;
   author: string;
+  companyName: string;
   body: {
     description: string;
-    contactInfo: string;
-    address: string;
+    additionalInfo: string;
+    contactInfo: {
+      email: string;
+      phoneNumber: string;
+    };
+    address: {
+      streetaddress: string;
+      zipcode: string;
+      city: string;
+    };
   };
+  relevantDegrees: Degree[];
+  relevantOrientations: ActivityOrientation[];
+  _id: string;
 }

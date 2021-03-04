@@ -5,7 +5,6 @@ import decodejwt, { InvalidTokenError } from "jwt-decode";
 //Import services
 import JobService from "../Services/JobService";
 import DegreeService from "../Services/DegreeService";
-import { Console } from "console";
 import { snackbarNotify } from "./Snackbar";
 import ActivityOrientationService from "../Services/ActivityOrientationService";
 
@@ -20,6 +19,8 @@ const App = () => {
 
   useEffect(() => {
     JobService.getAllJobs().then((jobs) => {
+      //sort by job.title in descending order
+      jobs.sort((a, b) => a.title.localeCompare(b.title)); //sorted
       setJobs(jobs);
     });
     DegreeService.getAllDegrees().then((degrees) => {

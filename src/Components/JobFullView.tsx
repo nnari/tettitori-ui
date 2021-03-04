@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
-import { Card, Segment, Header, Placeholder } from "semantic-ui-react";
+import { Card, Segment, Header, Placeholder, Grid } from "semantic-ui-react";
 import { DegreeLabelGroup } from "./Degree/DegreeLabelGroup";
 import JobService from "../Services/JobService";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
-}
-
-function QueryParamsDemo() {
-  let query = useQuery();
 }
 
 export const JobFullView = () => {
@@ -29,13 +25,20 @@ export const JobFullView = () => {
 
   return !loading && job.author !== undefined ? (
     <Segment>
-      <Header as="h2">{job.title}</Header>
+      <Grid columns="equal">
+        <Grid.Column floated="left">
+          <Header as="h2">{job.title}</Header>
+        </Grid.Column>
+        <Grid.Column floated="right" textAlign="right">
+          <Header as="h3">{job.companyName}</Header>
+        </Grid.Column>
+      </Grid>
       <Header as="h3">Tettipaikan kuvaus</Header>
       <p>{job.body.description}</p>
       <Header as="h3">Yhteystiedot</Header>
-      <p>{job.body.contactInfo}</p>
+      <p>{`${job.body.contactInfo.phoneNumber}, ${job.body.contactInfo.email}`}</p>
       <Header as="h3">Osoite</Header>
-      <p>{job.body.address}</p>
+      <p>{`${job.body.address.streetaddress}, ${job.body.address.zipcode}, ${job.body.address.city}`}</p>
       <Card.Content>
         <DegreeLabelGroup degrees={job.relevantDegrees} limit={100} />
       </Card.Content>

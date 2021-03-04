@@ -5,6 +5,7 @@ import {
   Input,
   DropdownProps,
   Message,
+  Header,
 } from "semantic-ui-react";
 import { useFormik } from "formik";
 import { SyntheticEvent } from "react";
@@ -13,6 +14,7 @@ import { snackbarNotify } from "./Snackbar";
 
 //We're gonna need Yup for validation
 import * as Yup from "yup";
+import { convertTypeAcquisitionFromJson } from "typescript";
 
 const jobSchemaValues = {
   title: {
@@ -36,14 +38,15 @@ const JobSchema = Yup.object().shape({
     .min(t.min, `Otsikko on liian lyhyt! ${t.min}-${t.max} merkkiä.`)
     .max(t.max, `Otsikko on liian pitkä! ${t.min}-${t.max} merkkiä.`)
     .required(`Otsikko on pakollinen`),
+  companyName: Yup.string().required("Yrityksen nimi on pakollinen."),
   description: Yup.string()
     .min(d.min, `Kuvaus on liian lyhyt. ${d.min}-${d.max} merkkiä.`)
     .max(d.max, `Kuvaus on liian pitkä. ${d.min}-${d.max} merkkiä.`)
     .required(`Kuvaus on pakollinen`),
-  contactInfo: Yup.string()
-    .min(d.min, `Yhteystiedot ovat liian lyhyet. ${c.min}-${c.max} merkkiä.`)
-    .max(d.max, `Yhteystiedot ovat liian pitkät! ${c.min}-${c.max} merkkiä.`)
-    .required(`Yhteystiedot ovat pakolliset`),
+  contactInfo: Yup.object().shape({
+    email: Yup.string().required("Sähköposti on pakollinen"),
+    phoneNumber: Yup.string().required("Puhelinnumero on pakollinen"),
+  }),
 });
 
 interface Props {
@@ -68,8 +71,16 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
     initialValues: {
       title: "",
       description: "",
-      contactInfo: "",
-      address: "",
+      companyName: "",
+      contactInfo: {
+        email: "",
+        phoneNumber: "",
+      },
+      address: {
+        streetaddress: "",
+        zipcode: "",
+        city: "",
+      },
       relevantDegrees: [],
       relevantOrientations: [],
     },
@@ -79,6 +90,7 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
         title: values.title,
         relevantDegrees: values.relevantDegrees,
         relevantOrientations: values.relevantOrientations,
+        companyName: values.companyName,
         body: {
           description: values.description,
           contactInfo: values.contactInfo,
@@ -87,6 +99,7 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
       };
       JobService.postNewJob(data, user);
       snackbarNotify("Uusi tettipaikka lisätty.");
+      formik.resetForm();
     },
   });
   return (
@@ -94,8 +107,8 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
       <Form.Field
         id="title"
         control={Input}
-        label="Otsikko"
-        placeholder="Tettipaikan otsikko"
+        label="Tehtävänimike"
+        placeholder="Tehtävänimike on kuvaus tettipaikalla tapahtuvista tehtävistä (Esim. Valokuvaaja, parturi-kampaaja)."
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={
@@ -107,7 +120,7 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
         id="description"
         control={TextArea}
         label="Kuvaus"
-        placeholder="Tettipaikan kuvaus"
+        placeholder="Tettipaikan / tehtävänimikkeen kuvaus"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={
@@ -116,29 +129,89 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
         }
       />
       <Form.Field
-        id="contactInfo"
-        control={TextArea}
-        label="Yhteystiedot"
-        placeholder="Tettipaikan yhteystiedot"
+        id="companyName"
+        control={Input}
+        label="Tettipaikkaa tarjoavan yrityksen nimi"
+        placeholder="Tettipaikkaa tarjoavan yrityksen nimi."
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={
-          formik.errors.contactInfo &&
-          formik.touched.contactInfo && { content: formik.errors.contactInfo }
+          formik.errors.companyName &&
+          formik.touched.companyName && { content: formik.errors.companyName }
         }
       />
+      <Header as="h4">Tettipaikan yhteystiedot</Header>
+      <Form.Group widths="equal">
+        <Form.Field
+          id="contactInfo.email"
+          control={Input}
+          fluid
+          label="Sähköposti"
+          placeholder="Sähköposti yhteydenottoa varten"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.errors.contactInfo?.email &&
+            formik.touched.contactInfo?.email && {
+              content: formik.errors.contactInfo.email,
+            }
+          }
+        />
+        <Form.Field
+          id="contactInfo.phoneNumber"
+          control={Input}
+          fluid
+          label="Puhelinnumero"
+          placeholder="Puhelinnumero yhteydenottoa varten"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.errors.contactInfo?.phoneNumber &&
+            formik.touched.contactInfo?.phoneNumber && {
+              content: formik.errors.contactInfo.phoneNumber,
+            }
+          }
+        />
+      </Form.Group>
       <Form.Field
-        id="address"
+        id="additionalInfo"
         control={TextArea}
-        label="Osoite"
-        placeholder="Tettipaikan osoite"
+        label="Lisätiedot"
+        placeholder="Tettipaikan lisätiedot (esim. toivottu yhteenottotapa)"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        error={
-          formik.errors.address &&
-          formik.touched.address && { content: formik.errors.address }
-        }
       />
+      <Header as="h4">Tettipaikan osoitetiedot</Header>
+      <Form.Field
+        id="address.streetaddress"
+        control={Input}
+        label="Katuosoite"
+        placeholder="Tettipaikan katuosoite"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      />
+      <Form.Group widths="equal">
+        <Form.Field
+          id="address.city"
+          control={Input}
+          fluid
+          label="Kaupunki"
+          placeholder="Kaupunki, missä tettipaikka sijaitsee"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+        <Form.Field
+          id="address.zipcode"
+          control={Input}
+          type="number"
+          width={5}
+          label="Postinumero"
+          placeholder="Tettipaikan postinumero"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+      </Form.Group>
+      <Header as="h4">Tettipaikan lisätietokentät</Header>
       <Form.Dropdown
         id="relevantOrientations"
         label="Liittyvät työprofiilit"
@@ -165,7 +238,13 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
         selection
         options={DropdownDegrees}
       />
-      <Button type="submit">Submit</Button>
+      <Button
+        color="green"
+        type="submit"
+        disabled={!(formik.isValid && formik.dirty)}
+      >
+        Tallenna
+      </Button>
     </Form>
   );
 };

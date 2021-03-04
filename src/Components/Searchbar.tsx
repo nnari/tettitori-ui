@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { Dropdown, Header, Menu } from "semantic-ui-react";
+import React from "react";
+import { Dropdown, Menu } from "semantic-ui-react";
 
 interface Props {
   orientations: ActivityOrientation[];
