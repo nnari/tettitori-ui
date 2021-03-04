@@ -7,17 +7,20 @@ import JobService from "../Services/JobService";
 import DegreeService from "../Services/DegreeService";
 import { snackbarNotify } from "./Snackbar";
 import ActivityOrientationService from "../Services/ActivityOrientationService";
+import FavoriteService from "../Services/FavoriteService";
 
 const App = () => {
   //We want to be storing global state here
   const [user, setUser] = useState<User>();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [degrees, setDegrees] = useState<Degree[]>([]);
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
   const [orientations, setOrientations] = useState<ActivityOrientation[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    document.title = "Tettilä";
     JobService.getAllJobs().then((jobs) => {
       //sort by job.title in descending order
       jobs.sort((a, b) => a.title.localeCompare(b.title)); //sorted
@@ -30,6 +33,7 @@ const App = () => {
     ActivityOrientationService.getAllOrientations().then((orientations) => {
       setOrientations(orientations);
     });
+    setFavorites(FavoriteService.getFavorites());
     //Check localStorage for user
     if (localStorage.getItem("user")) {
       const userJson: unknown = localStorage.getItem("user");
@@ -70,6 +74,7 @@ const App = () => {
         jobs={jobs}
         degrees={degrees}
         loading={loading}
+        favorites={favorites}
         handleLogOut={handleLogOut}
         isAuthenticated={isAuthenticated}
         orientations={orientations}

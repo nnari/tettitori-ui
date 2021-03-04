@@ -8,6 +8,9 @@ declare interface User {
 declare module "*.jpg";
 declare module "*.css";
 
+declare interface Favorite {
+  _id: string;
+}
 declare interface Degree {
   _id: string;
   title: string;

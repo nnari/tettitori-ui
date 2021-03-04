@@ -38,6 +38,7 @@ interface Props {
   orientations: ActivityOrientation[];
   loading: boolean;
   user: User;
+  favorites?: Favorite[];
   isAuthenticated: boolean;
 }
 

@@ -33,6 +33,9 @@ const jobSchemaValues = {
 
 const { title: t, description: d, contactInfo: c } = jobSchemaValues;
 
+//yeah get rid of this
+const phoneRegExp = /^(?=.*[0-9])[- +()0-9]+$/;
+
 const JobSchema = Yup.object().shape({
   title: Yup.string()
     .min(t.min, `Otsikko on liian lyhyt! ${t.min}-${t.max} merkkiä.`)
@@ -44,8 +47,15 @@ const JobSchema = Yup.object().shape({
     .max(d.max, `Kuvaus on liian pitkä. ${d.min}-${d.max} merkkiä.`)
     .required(`Kuvaus on pakollinen`),
   contactInfo: Yup.object().shape({
-    email: Yup.string().required("Sähköposti on pakollinen"),
-    phoneNumber: Yup.string().required("Puhelinnumero on pakollinen"),
+    email: Yup.string()
+      .email("Sähköposti on virheellinen")
+      .required("Sähköposti on pakollinen"),
+    phoneNumber: Yup.string()
+      .trim()
+      .matches(phoneRegExp, {
+        message: "Puhelinnumero ei ole sallitussa muodossa",
+      })
+      .required("Puhelinnumero on pakollinen"),
   }),
 });
 
@@ -87,14 +97,21 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
     validationSchema: JobSchema,
     onSubmit: (values) => {
       const data = {
-        title: values.title,
+        title: values.title.trim(),
         relevantDegrees: values.relevantDegrees,
         relevantOrientations: values.relevantOrientations,
-        companyName: values.companyName,
+        companyName: values.companyName.trim(),
         body: {
-          description: values.description,
-          contactInfo: values.contactInfo,
-          address: values.address,
+          description: values.description.trim(),
+          contactInfo: {
+            email: values.contactInfo.email.trim(),
+            phoneNumber: values.contactInfo.phoneNumber.trim(),
+          },
+          address: {
+            city: values.address.city.trim(),
+            streetaddress: values.address.streetaddress.trim(),
+            zipcode: values.address.zipcode.trim(),
+          },
         },
       };
       JobService.postNewJob(data, user);

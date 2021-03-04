@@ -8,6 +8,7 @@ import {
   Button,
   Grid,
 } from "semantic-ui-react";
+import FavoriteService from "../Services/FavoriteService";
 import { ActivityOrientationLabelGroup } from "./ActivityOrientation/ActivityOrientationLabelGroup";
 import { DegreeLabelGroup } from "./Degree/DegreeLabelGroup";
 
@@ -43,15 +44,25 @@ export const JobListItem = ({ job, descriptionPreviewLength = 300 }: Props) => {
           activityOrientations={job.relevantOrientations}
         />
         <DegreeLabelGroup degrees={job.relevantDegrees} limit={100} />
-        <Button
-          as={Link}
-          fluid
-          color="black"
-          style={{ marginTop: "1em" }}
-          icon="search"
-          to={`/paikka?id=${job._id}`}
-          content="Katsele paikan tietoja"
-        />
+
+        {/* Add as favorite */}
+        <Button.Group fluid style={{ marginTop: "1em" }}>
+          <Button
+            color="red"
+            labelPosition="left"
+            icon="heart"
+            content="Lisää suosikkeihin"
+            onClick={() => FavoriteService.addJobToFavorites(job._id)}
+          />
+          <Button.Or text="tai" />
+          <Button
+            as={Link}
+            color="black"
+            icon="search"
+            to={`/paikka?id=${job._id}`}
+            content="Katsele paikan tietoja"
+          />
+        </Button.Group>
       </Segment>
     </>
   );
