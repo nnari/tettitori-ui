@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { JobListItem } from "./JobListItem";
 import { Container } from "semantic-ui-react";
 

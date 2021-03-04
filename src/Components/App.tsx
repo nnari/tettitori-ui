@@ -22,6 +22,7 @@ const App = () => {
       //sort by job.title in descending order
       jobs.sort((a, b) => a.title.localeCompare(b.title)); //sorted
       setJobs(jobs);
+      setLoading(false);
     });
     DegreeService.getAllDegrees().then((degrees) => {
       setDegrees(degrees);
@@ -68,7 +69,7 @@ const App = () => {
         handleAccessToken={handleAccessToken}
         jobs={jobs}
         degrees={degrees}
-        loading
+        loading={loading}
         handleLogOut={handleLogOut}
         isAuthenticated={isAuthenticated}
         orientations={orientations}

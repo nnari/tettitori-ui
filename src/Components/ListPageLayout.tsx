@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Container, Header, Image } from "semantic-ui-react";
+import {
+  Container,
+  Dimmer,
+  Divider,
+  Header,
+  Image,
+  Loader,
+  Placeholder,
+  Segment,
+  Transition,
+} from "semantic-ui-react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,6 +27,8 @@ import { Hero } from "./Hero";
 import { Snackbar } from "./Snackbar";
 import { FrontPage } from "./FrontPage";
 import Searchbar from "./Searchbar";
+import { render } from "@testing-library/react";
+import { JsxElement } from "typescript";
 
 interface Props {
   handleAccessToken: (accessToken: string) => void;
@@ -29,18 +41,39 @@ interface Props {
   isAuthenticated: boolean;
 }
 
+const renderLoader = () => (
+  <>
+    <Segment>
+      <Dimmer active>
+        <Loader>Ladataan...</Loader>
+      </Dimmer>
+      {[1, 2, 3, 4].map((e: any, i: number) => (
+        <Placeholder>
+          <Placeholder.Paragraph>
+            <Placeholder.Line />
+            <Placeholder.Line />
+            <Placeholder.Line />
+            <Placeholder.Line />
+            <Placeholder.Line />
+          </Placeholder.Paragraph>
+        </Placeholder>
+      ))}
+    </Segment>
+  </>
+);
+
 const ListPageLayout = ({
   handleAccessToken,
   jobs,
   degrees,
   user,
+  loading,
   handleLogOut,
   isAuthenticated,
   orientations,
 }: Props) => {
   const [filtered, setFiltered] = useState<Job[]>([]);
 
-  console.log("Props in HomePage: ", isAuthenticated);
   return (
     <div className="wrapper">
       <Router>
@@ -77,7 +110,18 @@ const ListPageLayout = ({
                   jobs={jobs}
                   setFiltered={setFiltered}
                 />
-                <JobListGroup jobs={filtered.length > 0 ? filtered : jobs} />
+                {/* Transition, show only loader if still loading. */}
+                {loading && renderLoader()}
+
+                <Transition.Group animation={"fade in"} duration={1500}>
+                  {!loading && (
+                    <Container fluid>
+                      <JobListGroup
+                        jobs={filtered.length > 0 ? filtered : jobs}
+                      />
+                    </Container>
+                  )}
+                </Transition.Group>
               </Container>
             )}
           />
