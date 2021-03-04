@@ -115,7 +115,14 @@ const ListPageLayout = ({
 
                 <Transition.Group animation={"fade in"} duration={1500}>
                   {!loading && (
-                    <Container fluid>
+                    <Container
+                      fluid
+                      style={{
+                        width: "100% !important",
+                        marginLeft: "1em!important",
+                        marginRight: "1em!important",
+                      }}
+                    >
                       <JobListGroup
                         jobs={filtered.length > 0 ? filtered : jobs}
                       />
