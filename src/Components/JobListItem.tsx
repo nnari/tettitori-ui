@@ -13,9 +13,10 @@ import { DegreeLabelGroup } from "./Degree/DegreeLabelGroup";
 
 interface Props {
   job: Job;
+  descriptionPreviewLength?: number;
 }
 
-export const JobListItem = ({ job }: Props) => {
+export const JobListItem = ({ job, descriptionPreviewLength = 300 }: Props) => {
   return (
     <>
       <Segment>
@@ -29,7 +30,15 @@ export const JobListItem = ({ job }: Props) => {
         </Grid>
 
         <Divider />
-        <p>{job.body.description}</p>
+        {/* Truncate description */}
+        {job.body.description.length > descriptionPreviewLength ? (
+          <p>{`${job.body.description.substring(
+            0,
+            descriptionPreviewLength
+          )} ...`}</p>
+        ) : (
+          <p>{job.body.description}</p>
+        )}
         <ActivityOrientationLabelGroup
           activityOrientations={job.relevantOrientations}
         />

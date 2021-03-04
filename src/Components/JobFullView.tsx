@@ -55,16 +55,33 @@ export const JobFullView = () => {
       </Grid>
       <Header as="h3">Tettipaikan kuvaus</Header>
       <p>{job.body.description}</p>
-      <Header as="h3">Yhteystiedot</Header>
-      <p>{`${job.body.contactInfo.phoneNumber}, ${job.body.contactInfo.email}`}</p>
-      <Header as="h3">Osoite</Header>
-      <p>{`${job.body.address.streetaddress}, ${job.body.address.zipcode}, ${job.body.address.city}`}</p>
+      {job.body.contactInfo.email && job.body.contactInfo.phoneNumber && (
+        <>
+          <Header as="h3">Yhteystiedot</Header>
+          <p>{`${job.body.contactInfo.phoneNumber}, ${job.body.contactInfo.email}`}</p>
+        </>
+      )}
+      {job.body.address.streetaddress &&
+        job.body.address.zipcode &&
+        job.body.address.city && (
+          <>
+            <Header as="h3">Osoite</Header>
+            <p>{`${job.body.address.streetaddress}, ${job.body.address.zipcode}, ${job.body.address.city}`}</p>
+          </>
+        )}
       {/* Map */}
-      {gmapsUri !== "" && (
-        <Embed
-          defaultActive
-          placeholder=""
-          url={`https://maps.google.com/maps?q=${gmapsUri}&output=embed&z=15`}
+      {gmapsUri !== "" ? (
+        <>
+          <Header as="h2" content="Tettipaikka kartalla" />
+          <Embed
+            defaultActive
+            url={`https://maps.google.com/maps?q=${gmapsUri}&output=embed&z=15`}
+          />
+        </>
+      ) : (
+        <Header
+          as="h3"
+          content="Tettipaikka ei ole lisännyt osoitetietoja, karttaa ei ole saatavilla."
         />
       )}
       <Card.Content>
