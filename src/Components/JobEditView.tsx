@@ -101,17 +101,21 @@ export const JobEditView = ({ jobs, degrees, user, orientations }: Props) => {
             <Header as="h1">{job.title}</Header>
             <Divider />
             <p>{job.description}</p>
-            <Button.Group>
-              <Button color="blue" as={Link} to={`/paikka?id=${job.id}`}>
-                Katsele paikkaa
-              </Button>
+            <Button.Group fluid>
+              <Button
+                color="blue"
+                as={Link}
+                to={`/paikka?id=${job.id}`}
+                content="Katsele paikkaa"
+                icon="search"
+              />
               <Button.Or text="tai" />
               <Button
                 color="red"
                 onClick={(e: any) => handleShowConfirm(job.id)}
-              >
-                Poista tämä tettipaikka
-              </Button>
+                content="Poista tämä tettipaikka"
+                icon="trash"
+              />
             </Button.Group>
           </Segment>
         ))

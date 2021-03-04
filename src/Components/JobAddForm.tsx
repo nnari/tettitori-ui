@@ -242,9 +242,10 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
         color="green"
         type="submit"
         disabled={!(formik.isValid && formik.dirty)}
-      >
-        Tallenna
-      </Button>
+        content="Tallenna"
+        icon="save"
+        labelPosition="left"
+      />
     </Form>
   );
 };

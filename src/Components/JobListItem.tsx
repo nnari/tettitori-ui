@@ -48,10 +48,10 @@ export const JobListItem = ({ job, descriptionPreviewLength = 300 }: Props) => {
           fluid
           color="black"
           style={{ marginTop: "1em" }}
+          icon="search"
           to={`/paikka?id=${job._id}`}
-        >
-          Katsele paikan tietoja
-        </Button>
+          content="Katsele paikan tietoja"
+        />
       </Segment>
     </>
   );

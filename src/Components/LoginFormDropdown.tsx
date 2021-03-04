@@ -47,9 +47,14 @@ export const LoginFormDropdown = ({ handleAccessToken }: Props) => {
               onClick={(e: any) => e.stopPropagation()}
               onChange={(e: any) => setPassword(e.target.value)}
             />
-            <Button type="submit" tabIndex={3}>
-              Submit
-            </Button>
+            <Button
+              type="submit"
+              fluid
+              tabIndex={3}
+              icon="sign in"
+              labelPosition="left"
+              content="Kirjaudu sisään"
+            />
             {
               <Message
                 error
