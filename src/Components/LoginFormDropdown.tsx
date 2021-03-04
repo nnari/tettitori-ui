@@ -18,7 +18,6 @@ export const LoginFormDropdown = ({ handleAccessToken }: Props) => {
 
   const submitLoginData = async (e: any) => {
     e.preventDefault();
-    e.stopPropagation();
     let response = await fetch(LOGIN_URL, {
       method: "POST",
       body: JSON.stringify({ username, password }),
@@ -29,24 +28,26 @@ export const LoginFormDropdown = ({ handleAccessToken }: Props) => {
   };
 
   return (
-    <Dropdown direction="left" text="Kirjaudu sisään" closeOnEscape={false}>
+    <Dropdown direction="left" text="Kirjaudu sisään" closeOnBlur={false}>
       <Dropdown.Menu>
-        <Form>
+        <Form onSubmit={(e: React.SyntheticEvent) => submitLoginData(e)}>
           <Segment stacked>
             <Form.Input
+              tabIndex={1}
               icon="user"
               placeholder="Käyttäjätunnus"
               onClick={(e: any) => e.stopPropagation()}
               onChange={(e: any) => setUsername(e.target.value)}
             />
             <Form.Input
+              tabIndex={2}
               icon="lock"
               type="password"
               placeholder="Salasana"
               onClick={(e: any) => e.stopPropagation()}
               onChange={(e: any) => setPassword(e.target.value)}
             />
-            <Button type="submit" onClick={(e: any) => submitLoginData(e)}>
+            <Button type="submit" tabIndex={3}>
               Submit
             </Button>
             {

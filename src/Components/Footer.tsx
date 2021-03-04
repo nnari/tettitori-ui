@@ -18,27 +18,26 @@ export const Footer = () => {
       <Container textAlign="center">
         <Grid divided inverted stackable>
           <Grid.Column width={3}>
-            <Header inverted as="h4" content="Group 3" />
+            <Header inverted as="h4" content="Lisää linkkejä" />
             <List link inverted>
-              <List.Item as="a">Link One</List.Item>
-              <List.Item as="a">Link Two</List.Item>
-              <List.Item as="a">Link Three</List.Item>
-              <List.Item as="a">Link Four</List.Item>
+              <List.Item as="a" href="https://github.com/nnari/tettitori-api">
+                Rajapinta
+              </List.Item>
+              <List.Item as="a" href="https://github.com/nnari/tettitori-ui">
+                UI
+              </List.Item>
             </List>
           </Grid.Column>
           <Grid.Column width={10} textAlign="center">
-            <Header inverted as="h4" content="Footer Header" />
-            <p>
-              Extra space for a call to action inside the footer that could help
-              re-engage users.
-            </p>
+            <Header inverted as="h4" content="Ota yhteyttä" />
+            <p>Footerin lisätiedot</p>
           </Grid.Column>
         </Grid>
 
         <Divider inverted section />
-        <List horizontal inverted divided link size="small">
-          <List.Item as="a" href="#">
-            Privacy Policy
+        <List horizontal inverted divided link size="small" target="_blank">
+          <List.Item as="a" href="https://github.com/nnari">
+            Tatu Pesonen {new Date().getFullYear()}
           </List.Item>
         </List>
       </Container>
