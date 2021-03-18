@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ListPageLayout from "./ListPageLayout";
-import decodejwt, { InvalidTokenError } from "jwt-decode";
+import decodejwt from "jwt-decode";
 
 //Import services
 import JobService from "../Services/JobService";
@@ -18,6 +18,7 @@ const App = () => {
   const [orientations, setOrientations] = useState<ActivityOrientation[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     document.title = "Tettilä";
@@ -40,6 +41,7 @@ const App = () => {
       const user = JSON.parse(userJson as string) as User;
       snackbarNotify("Tervetuloa Tettilään, " + user?.username);
       setUser(user);
+      if (user.role === "admin") setIsAdmin(true);
       setIsAuthenticated(true);
     }
   }, []);
@@ -52,6 +54,7 @@ const App = () => {
         ...(jwtPayload as {}),
       };
       setUser(decodedJwt as User);
+      if ((decodedJwt as User).role === "admin") setIsAdmin(true);
       localStorage.setItem("user", JSON.stringify(decodedJwt));
       setIsAuthenticated(true);
     } catch (e) {
@@ -61,6 +64,7 @@ const App = () => {
 
   function handleLogOut() {
     setUser({} as User);
+    setIsAdmin(false);
     setIsAuthenticated(false);
     localStorage.removeItem("user");
     snackbarNotify("Olet kirjautunut ulos.");
@@ -77,6 +81,7 @@ const App = () => {
         favorites={favorites}
         handleLogOut={handleLogOut}
         isAuthenticated={isAuthenticated}
+        isAdmin={isAdmin}
         orientations={orientations}
       />
     </div>

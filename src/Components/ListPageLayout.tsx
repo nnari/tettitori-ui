@@ -27,9 +27,6 @@ import { Hero } from "./Hero";
 import { Snackbar } from "./Snackbar";
 import { FrontPage } from "./FrontPage";
 import Searchbar from "./Searchbar";
-import { render } from "@testing-library/react";
-import { JsxElement } from "typescript";
-
 interface Props {
   handleAccessToken: (accessToken: string) => void;
   handleLogOut: () => void;
@@ -40,6 +37,7 @@ interface Props {
   user: User;
   favorites?: Favorite[];
   isAuthenticated: boolean;
+  isAdmin: boolean;
 }
 
 const renderLoader = () => (
@@ -71,10 +69,11 @@ const ListPageLayout = ({
   loading,
   handleLogOut,
   isAuthenticated,
+  isAdmin,
   orientations,
 }: Props) => {
   const [filtered, setFiltered] = useState<Job[]>([]);
-
+  console.log("user is admin: ", isAdmin);
   return (
     <div className="wrapper">
       <Router>
@@ -148,6 +147,7 @@ const ListPageLayout = ({
               )
             }
           />
+          <Route path="/admin" render={() => <h1>${isAdmin}</h1>} />
           <Route path="/">
             <FrontPage />
           </Route>

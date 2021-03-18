@@ -10,8 +10,7 @@ import {
   Confirm,
 } from "semantic-ui-react";
 import { DegreeLabelGroup } from "./Degree/DegreeLabelGroup";
-import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { useFormik } from "formik"; import { Link } from "react-router-dom";
 
 //Import JobAddForm component
 import { JobAddForm } from "./JobAddForm";
