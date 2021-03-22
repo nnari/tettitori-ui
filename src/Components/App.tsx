@@ -55,6 +55,7 @@ const App = () => {
       };
       setUser(decodedJwt as User);
       if ((decodedJwt as User).role === "admin") setIsAdmin(true);
+      snackbarNotify("Tervetuloa Tettilään, " + (decodedJwt as User).username);
       localStorage.setItem("user", JSON.stringify(decodedJwt));
       setIsAuthenticated(true);
     } catch (e) {

@@ -8,7 +8,7 @@ export interface AdminViewUser {
   email?: string;
 }
 
-export type AdminViewCreatedDTO = Required<AdminViewUser>;
+export type AdminViewCreatedDTO = Required<AdminViewUser> | undefined;
 export type AdminDbView = Omit<Required<AdminViewUser>, "password">[];
 export type AdminViewUserDeleteRequest =
   | Pick<Required<AdminViewUser>, "_id">
@@ -30,7 +30,7 @@ class AdminService {
   createUser = (
     userdata: Partial<AdminViewUser>,
     user: User
-  ): Promise<AdminViewUser> => {
+  ): Promise<Required<AdminViewUser>> => {
     let config = {
       headers: {
         Authorization: "Bearer " + user.accessToken,

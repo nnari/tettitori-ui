@@ -43,7 +43,7 @@ export const AdminView = ({ user }: Props) => {
     ""
   );
   const [isConfirming, setIsConfirming] = useState(false);
-  const [addedUser, setAddedUser] = useState<AdminViewCreatedDTO | object>({});
+  const [addedUser, setAddedUser] = useState<AdminViewCreatedDTO | undefined>();
 
   const init = async () => {
     let users = await UserService.getAllUsers(user);
@@ -90,8 +90,8 @@ export const AdminView = ({ user }: Props) => {
         email: values.email.trim(),
       };
       UserService.createUser(data, user).then((res) => {
-        console.log(res);
-        snackbarNotify(`Uusi käyttäjä lisätty: ${JSON.stringify(res)}`);
+        snackbarNotify(`Uusi käyttäjä lisätty: ${res.username}`);
+        setAddedUser(res);
       });
       formik.resetForm();
     },
@@ -165,6 +165,8 @@ export const AdminView = ({ user }: Props) => {
         onCancel={handleConfirmCancel}
         onConfirm={handleDeleteConfirm}
       />
+      {addedUser?.username && <p>Käyttäjänimi: {addedUser.username}</p>}
+      {addedUser?.password && <p>Salasana: {addedUser.password}</p>}
     </Container>
   );
 };
