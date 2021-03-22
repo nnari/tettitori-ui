@@ -49,8 +49,9 @@ const reducer = (state: any, action: Action) => {
 
 export const JobEditView = ({ jobs, degrees, user, orientations }: Props) => {
   const init = (initialJobs: Job[]) => {
+    //Check for admin
+    initialJobs = user.role === 'admin' ? initialJobs : initialJobs.filter((j) => j.authorDisplayName === user.username) 
     return initialJobs
-      .filter((j) => j.authorDisplayName === user.username)
       .map((job: Job, idx: number) => ({
         relevantDegrees: job.relevantDegrees,
         description: job.body.description,

@@ -14,7 +14,6 @@ import { snackbarNotify } from "./Snackbar";
 
 //We're gonna need Yup for validation
 import * as Yup from "yup";
-import { convertTypeAcquisitionFromJson } from "typescript";
 
 const jobSchemaValues = {
   title: {
@@ -110,7 +109,7 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
           address: {
             city: values.address.city.trim(),
             streetaddress: values.address.streetaddress.trim(),
-            zipcode: values.address.zipcode.trim(),
+            zipcode: values.address.zipcode,
           },
         },
       };
@@ -137,7 +136,7 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
         id="description"
         control={TextArea}
         label="Kuvaus"
-        placeholder="Tettipaikan / tehtävänimikkeen kuvaus"
+        placeholder="Tettipaikan / tehtävänimikkeen kuvaus. Tämän perusteella opiskelija todennäköisesti valitsee tettipaikkansa."
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={

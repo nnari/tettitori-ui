@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu, Container } from "semantic-ui-react";
+import { Menu, Container, MenuProps, MenuItemProps } from "semantic-ui-react";
 import { LoginFormDropdown } from "./LoginFormDropdown";
 import styles from "../index.css";
 
@@ -11,6 +11,12 @@ interface Props {
   user: User;
 }
 
+const AdminPageLinkSettings: MenuItemProps = {
+  color: "red",
+  as: "a",
+  active: true,
+};
+
 export const NavBar = ({
   position,
   handleAccessToken,
@@ -20,20 +26,27 @@ export const NavBar = ({
   return (
     <Menu fixed={position} inverted size="large">
       <Container>
-        <Link to="/">
-          <Menu.Item as="a" header>
-            Tettilä
-          </Menu.Item>
-        </Link>
-        <Link to="/paikat">
-          <Menu.Item as="a">Paikat</Menu.Item>
-        </Link>
+        <Menu.Item as="a" header>
+          <Link to="/">Tettilä</Link>
+        </Menu.Item>
+
+        <Menu.Item as="a">
+          <Link to="/paikat">Paikat</Link>
+        </Menu.Item>
+
         {user?.accessToken && (
-          <Link to="/profile">
-            <Menu.Item as="a">
+          <Menu.Item as="a">
+            <Link to="/profile">
               <b>Muokkaa oman paikan tietoja</b>
-            </Menu.Item>
-          </Link>
+            </Link>
+          </Menu.Item>
+        )}
+        {user?.role === "admin" && (
+          <Menu.Item {...AdminPageLinkSettings}>
+            <Link to="/admin">
+              <b>Järjestelmänvalvojan hallintapaneeli</b>
+            </Link>
+          </Menu.Item>
         )}
         {user?.accessToken ? (
           <Menu.Item position="right" as="a" onClick={() => handleLogOut()}>

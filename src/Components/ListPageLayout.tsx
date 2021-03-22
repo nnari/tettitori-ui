@@ -27,6 +27,7 @@ import { Hero } from "./Hero";
 import { Snackbar } from "./Snackbar";
 import { FrontPage } from "./FrontPage";
 import Searchbar from "./Searchbar";
+import { AdminView } from "./AdminView";
 interface Props {
   handleAccessToken: (accessToken: string) => void;
   handleLogOut: () => void;
@@ -147,7 +148,7 @@ const ListPageLayout = ({
               )
             }
           />
-          <Route path="/admin" render={() => <h1>${isAdmin}</h1>} />
+          <Route path="/admin" render={() => user?.role === 'admin' && isAuthenticated ? <AdminView user={user} /> : <Redirect to="/"/>}/>
           <Route path="/">
             <FrontPage />
           </Route>
