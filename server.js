@@ -21,8 +21,6 @@ if (process.env.USE_SERVER_PROXY === "true") {
   );
 }
 
-app.use(express.static(path.join(__dirname, "build")));
-
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
