@@ -24,4 +24,4 @@ WORKDIR /opt/tettitori-ui
 
 RUN rm -R -rf /opt/install
 
-ENTRYPOINT npm run serve
+ENTRYPOINT node server

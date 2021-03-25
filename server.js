@@ -8,9 +8,11 @@ app.disable("x-powered-by"); //Don't show Express' headers
 app.set("trust proxy", true);
 const STATIC_ROUTE = "/static";
 
-// Optional proxy
 if (process.env.USE_SERVER_PROXY === "true") {
   const proxy = require("http-proxy-middleware");
+  console.log(
+    `Using express server as proxy to ${process.env.SERVER_PROXY_URL}`
+  );
   app.use(
     "/api",
     proxy({
@@ -19,7 +21,6 @@ if (process.env.USE_SERVER_PROXY === "true") {
   );
 }
 
-console.log(`Using API url ${process.env.REACT_APP_API_URL}`);
 app.use(express.static(path.join(__dirname, "build")));
 
 app.get("/", function (req, res) {
