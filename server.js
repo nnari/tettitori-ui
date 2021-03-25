@@ -19,6 +19,7 @@ if (process.env.USE_SERVER_PROXY === "true") {
   );
 }
 
+console.log(`Using API url ${process.env.REACT_APP_API_URL}`);
 app.use(express.static(path.join(__dirname, "build")));
 
 app.get("/", function (req, res) {
