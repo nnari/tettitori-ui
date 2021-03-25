@@ -90,6 +90,7 @@ export const AdminView = ({ user }: Props) => {
         email: values.email.trim(),
       };
       UserService.createUser(data, user).then((res) => {
+        console.log(res);
         snackbarNotify(`Uusi käyttäjä lisätty: ${res.username}`);
         setAddedUser(res);
       });
