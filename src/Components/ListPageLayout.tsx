@@ -28,6 +28,7 @@ import { Snackbar } from "./Snackbar";
 import { FrontPage } from "./FrontPage";
 import Searchbar from "./Searchbar";
 import { AdminView } from "./AdminView";
+import { CompanyInfoPage } from "./CompanyInfoPage";
 interface Props {
   handleAccessToken: (accessToken: string) => void;
   handleLogOut: () => void;
@@ -148,9 +149,19 @@ const ListPageLayout = ({
               )
             }
           />
-          <Route path="/admin" render={() => user?.role === 'admin' && isAuthenticated ? <AdminView user={user} /> : <Redirect to="/"/>}/>
+          <Route
+            path="/admin"
+            render={() =>
+              user?.role === "admin" && isAuthenticated ? (
+                <AdminView user={user} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+          <Route path="/companies" render={() => <CompanyInfoPage />} />
           <Route path="/">
-            <FrontPage />
+            <FrontPage jobs={jobs} />
           </Route>
         </Switch>
         <Footer />

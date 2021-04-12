@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Container,
@@ -16,7 +16,7 @@ import Img1 from "../Images/carousel/1.jpg";
 import Img2 from "../Images/carousel/2.jpg";
 import Img3 from "../Images/carousel/3.jpg";
 
-export const FrontPage = () => {
+export const FrontPage = ({ jobs }: { jobs: Job[] }) => {
   return (
     <Container style={{ marginTop: "2em" }}>
       <Header as="h1" style={{ fontSize: "4.5em", textAlign: "center" }}>
@@ -35,7 +35,12 @@ export const FrontPage = () => {
         </p>
         <Link to="/paikat">
           <Button size="large" color="blue">
-            Siirry TET-paikkojen katseluun
+            Tettiläiselle
+          </Button>
+        </Link>
+        <Link to="/companies">
+          <Button size="large" color="blue">
+            Yrityksille
           </Button>
         </Link>
       </Segment>

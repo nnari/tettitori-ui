@@ -5,6 +5,7 @@ const DEGREE_URL = API_URL + "/degree";
 const ORIENTATION_URL = API_URL + "/orientation";
 const ADMIN_URL = API_URL + "/admin";
 const ADMIN_URL_USER = "/user";
+const REGISTER_URL = API_URL + "/register";
 
 export {
   API_URL,
@@ -14,4 +15,5 @@ export {
   ORIENTATION_URL,
   ADMIN_URL,
   ADMIN_URL_USER,
+  REGISTER_URL,
 };
