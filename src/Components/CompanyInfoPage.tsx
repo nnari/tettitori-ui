@@ -45,11 +45,10 @@ export const CompanyInfoPage = () => {
         email: values.email.trim(),
         recaptcha: values.recaptcha,
       };
-      alert(JSON.stringify(data));
-      RegistrationService.RequestAccount(data).then((e) =>
-        snackbarNotify("Tunnuspyyntö lähetetty. Tarkista antamasi sähköposti.")
-      );
-      formik.resetForm();
+      RegistrationService.RequestAccount(data).then((e) => {
+        snackbarNotify("Tunnukset lähetetty. Tarkista antamasi sähköposti.");
+        formik.resetForm();
+      });
     },
   });
 
