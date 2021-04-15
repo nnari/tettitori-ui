@@ -59,6 +59,7 @@ export const JobListItem = ({ job, descriptionPreviewLength = 300 }: Props) => {
           as={Link}
           color="black"
           icon="search"
+          fluid
           to={`/paikka?id=${job._id}`}
           content="Katsele paikan tietoja"
         />
