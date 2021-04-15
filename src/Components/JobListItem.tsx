@@ -55,14 +55,14 @@ export const JobListItem = ({ job, descriptionPreviewLength = 300 }: Props) => {
             onClick={() => FavoriteService.addJobToFavorites(job._id)}
           />
           <Button.Or text="tai" /> */}
-          <Button
-            as={Link}
-            color="black"
-            icon="search"
-            to={`/paikka?id=${job._id}`}
-            content="Katsele paikan tietoja"
-          />
-        </Button.Group>
+        <Button
+          as={Link}
+          color="black"
+          icon="search"
+          to={`/paikka?id=${job._id}`}
+          content="Katsele paikan tietoja"
+        />
+        {/* </Button.Group> */}
       </Segment>
     </>
   );
