@@ -46,7 +46,7 @@ export const JobListItem = ({ job, descriptionPreviewLength = 300 }: Props) => {
         <DegreeLabelGroup degrees={job.relevantDegrees} limit={100} />
 
         {/* Add as favorite */}
-        <Button.Group fluid style={{ marginTop: "1em" }}>
+        {/* <Button.Group fluid style={{ marginTop: "1em" }}>
           <Button
             color="red"
             labelPosition="left"
@@ -54,7 +54,7 @@ export const JobListItem = ({ job, descriptionPreviewLength = 300 }: Props) => {
             content="Lisää suosikkeihin"
             onClick={() => FavoriteService.addJobToFavorites(job._id)}
           />
-          <Button.Or text="tai" />
+          <Button.Or text="tai" /> */}
           <Button
             as={Link}
             color="black"

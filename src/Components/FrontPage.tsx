@@ -40,7 +40,7 @@ export const FrontPage = ({ jobs }: { jobs: Job[] }) => {
         </Link>
         <Link to="/companies">
           <Button size="large" color="blue">
-            Yrityksille
+            Työnantajille
           </Button>
         </Link>
       </Segment>
