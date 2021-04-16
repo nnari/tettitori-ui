@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 const registrationFormSchema = {
   username: {
-    min: 3,
+    min: 5,
     max: 20,
   },
   email: {
