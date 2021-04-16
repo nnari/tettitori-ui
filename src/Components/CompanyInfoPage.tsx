@@ -5,7 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 //We're gonna need Yup for validation
 import * as Yup from "yup";
 import RegistrationService from "../Services/RegistrationService";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const registrationFormSchema = {
   username: {
@@ -32,6 +32,8 @@ const RegistrationFormSchema = Yup.object().shape({
 });
 
 export const CompanyInfoPage = () => {
+  const [loading, setLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -45,9 +47,11 @@ export const CompanyInfoPage = () => {
         email: values.email.trim(),
         recaptcha: values.recaptcha,
       };
+      setLoading(true);
       RegistrationService.RequestAccount(data).then((e) => {
         snackbarNotify("Tunnukset lähetetty. Tarkista antamasi sähköposti.");
         formik.resetForm();
+        setLoading(false);
       });
     },
   });
@@ -90,6 +94,7 @@ export const CompanyInfoPage = () => {
         </Form.Group>
         <Button
           color="green"
+          loading={loading}
           type="submit"
           disabled={!(formik.isValid && formik.dirty)}
           content="Lähetä pyyntö"
