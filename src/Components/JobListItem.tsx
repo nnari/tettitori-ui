@@ -40,9 +40,10 @@ export const JobListItem = ({ job, descriptionPreviewLength = 300 }: Props) => {
         ) : (
           <p>{job.body.description}</p>
         )}
-        <ActivityOrientationLabelGroup
+        {/* Commented out for now since there is no use case for activity orientations */}
+        {/* <ActivityOrientationLabelGroup
           activityOrientations={job.relevantOrientations}
-        />
+        /> */}
         <DegreeLabelGroup degrees={job.relevantDegrees} limit={100} />
 
         {/* Add as favorite */}

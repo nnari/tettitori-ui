@@ -69,6 +69,12 @@ export const JobFullView = () => {
             <p>{`${job.body.address.streetaddress}, ${job.body.address.zipcode}, ${job.body.address.city}`}</p>
           </>
         )}
+      {job.body.additionalInfo && (
+        <>
+          <Header as="h3">Lisätiedot</Header>
+          <p>{`${job.body.additionalInfo}`}</p>
+        </>
+      )}
       {/* Map */}
       {gmapsUri !== "" ? (
         <>

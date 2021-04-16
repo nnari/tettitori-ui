@@ -101,17 +101,18 @@ const ListPageLayout = ({
             render={() => (
               <Container style={{ marginTop: "2em" }}>
                 <Header as="h1">
-                  Hämeenlinnan Tettilässä listatut työssäoppipaikat
+                  Hämeenlinnan Tettilässä listatut työharjoittelupaikat
                 </Header>
                 <Header as="h2">
                   Tettilä on Hämeenlinnan ja lähiseudun nuorille tarkoitettu
-                  palvelu josta voit löytää itsellesi TET-paikan.
+                  palvelu, josta voit löytää itsellesi TET-paikan.
                 </Header>
-                <Searchbar
+                {/* Commented out for now because there is no use for orientations as of now */}
+                {/* <Searchbar
                   orientations={orientations}
                   jobs={jobs}
                   setFiltered={setFiltered}
-                />
+                /> */}
                 {/* Transition, show only loader if still loading. */}
                 {loading && renderLoader()}
 

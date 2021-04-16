@@ -27,7 +27,7 @@ export const FrontPage = ({ jobs }: { jobs: Job[] }) => {
         <Image src={Img1} size="medium" floated="left" />
         <p>
           <b>Tettilä</b> on Hämeenlinnan ja lähiseudun nuorille tarkoitettu
-          palvelu josta voit löytää itsellesi TET-paikan.
+          palvelu, josta voit löytää itsellesi TET-paikan.
         </p>
         <p>
           Palvelussa Hämeen alueen yritykset voivat listata mahdolliset

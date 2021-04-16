@@ -81,6 +81,7 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
       title: "",
       description: "",
       companyName: "",
+      additionalInfo: "",
       contactInfo: {
         email: "",
         phoneNumber: "",
@@ -106,6 +107,7 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
             email: values.contactInfo.email.trim(),
             phoneNumber: values.contactInfo.phoneNumber.trim(),
           },
+          additionalInfo: values.additionalInfo.trim(),
           address: {
             city: values.address.city.trim(),
             streetaddress: values.address.streetaddress.trim(),
@@ -193,7 +195,7 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
         id="additionalInfo"
         control={TextArea}
         label="Lisätiedot"
-        placeholder="Tettipaikan lisätiedot (esim. toivottu yhteenottotapa)"
+        placeholder="Tettipaikan lisätiedot (esim. toivottu yhteenottotapa, verkko-osoite)"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />
@@ -228,7 +230,8 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
         />
       </Form.Group>
       <Header as="h4">Tettipaikan lisätietokentät</Header>
-      <Form.Dropdown
+      {/* Remove orientations for now since there is no use case */}
+      {/* <Form.Dropdown
         id="relevantOrientations"
         label="Liittyvät työprofiilit"
         placeholder="Tettipaikkaan liittyvät työprofiilit"
@@ -240,7 +243,7 @@ export const JobAddForm = ({ degrees, user, orientations }: Props) => {
         search
         selection
         options={DropdownOrientations}
-      />
+      /> */}
       <Form.Dropdown
         label="Liittyvät koulutukset"
         id="relevantDegrees"
