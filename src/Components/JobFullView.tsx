@@ -9,6 +9,7 @@ import {
   Embed,
 } from "semantic-ui-react";
 import { DegreeLabelGroup } from "./Degree/DegreeLabelGroup";
+import Linkify from "react-linkify";
 import JobService from "../Services/JobService";
 
 function useQuery() {
@@ -54,7 +55,9 @@ export const JobFullView = () => {
         </Grid.Column>
       </Grid>
       <Header as="h3">Tettipaikan kuvaus</Header>
-      <p>{job.body.description}</p>
+      <Linkify>
+        <p>{job.body.description}</p>
+      </Linkify>
       {job.body.contactInfo.email && job.body.contactInfo.phoneNumber && (
         <>
           <Header as="h3">Yhteystiedot</Header>
@@ -72,7 +75,9 @@ export const JobFullView = () => {
       {job.body.additionalInfo && (
         <>
           <Header as="h3">Lisätiedot</Header>
-          <p>{`${job.body.additionalInfo}`}</p>
+          <Linkify>
+            <p>{`${job.body.additionalInfo}`}</p>
+          </Linkify>
         </>
       )}
       {/* Map */}
@@ -90,9 +95,9 @@ export const JobFullView = () => {
           content="Tettipaikka ei ole lisännyt osoitetietoja, karttaa ei ole saatavilla."
         />
       )}
-      <Card.Content>
+      {/* <Card.Content>
         <DegreeLabelGroup degrees={job.relevantDegrees} limit={100} />
-      </Card.Content>
+      </Card.Content> */}
     </Segment>
   ) : (
     renderPlaceHolder()

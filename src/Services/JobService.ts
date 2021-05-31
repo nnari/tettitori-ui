@@ -28,8 +28,20 @@ class JobService {
       return response.data;
     });
   };
+  editJob = (data: any, user: User): Promise<Job[]> => {
+    let config = {
+      headers: {
+        Authorization: "Bearer " + user.accessToken,
+      },
+    };
+    return axios
+      .put(`${JOB_URL}?id=${data.id}`, data, config)
+      .then((response) => {
+        snackbarNotify(`Tettipaikka tallennettu: ${data?.title}`);
+        return response.data;
+      });
+  };
   deleteJob = (id: string, user: User): void => {
-    console.log("deleteJob call");
     let config = {
       headers: {
         Authorization: "Bearer " + user.accessToken,

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   Segment,
   Container,
@@ -29,8 +30,15 @@ export const Footer = () => {
             </List>
           </Grid.Column>
           <Grid.Column width={10} textAlign="center">
-            <Header inverted as="h4" content="Ota yhteyttä" />
-            <p>Footerin lisätiedot</p>
+            <Grid.Row>
+              <Header
+                inverted
+                as="a"
+                size="small"
+                href="/PrivacyPolicy.pdf"
+                content="Tietosuojaseloste"
+              />
+            </Grid.Row>
           </Grid.Column>
         </Grid>
 

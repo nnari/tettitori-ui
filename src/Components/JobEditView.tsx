@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useEffect } from "react";
+import React, { useReducer, useState, useEffect, useRef } from "react";
 import {
   Card,
   Segment,
@@ -8,9 +8,11 @@ import {
   Button,
   Form,
   Confirm,
+  Message,
 } from "semantic-ui-react";
 import { DegreeLabelGroup } from "./Degree/DegreeLabelGroup";
-import { useFormik } from "formik"; import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import { Link } from "react-router-dom";
 
 //Import JobAddForm component
 import { JobAddForm } from "./JobAddForm";
@@ -50,20 +52,19 @@ const reducer = (state: any, action: Action) => {
 export const JobEditView = ({ jobs, degrees, user, orientations }: Props) => {
   const init = (initialJobs: Job[]) => {
     //Check for admin
-    initialJobs = user.role === 'admin' ? initialJobs : initialJobs.filter((j) => j.authorDisplayName === user.username) 
-    return initialJobs
-      .map((job: Job, idx: number) => ({
-        relevantDegrees: job.relevantDegrees,
-        description: job.body.description,
-        contactInfo: job.body.contactInfo,
-        address: job.body.address,
-        title: job.title,
-        id: job._id ?? idx,
-      }));
+    initialJobs =
+      user.role === "admin"
+        ? initialJobs
+        : initialJobs.filter((j) => j.authorDisplayName === user.username);
+    return initialJobs.map((job: Job, idx: number) => ({
+      ...job,
+      id: job._id ?? idx,
+    }));
   };
 
   const [state, dispatch] = useReducer(reducer, jobs, init);
   const [isConfirming, setIsConfirming] = useState(false);
+  const [editTarget, setEditTarget] = useState<Job>();
   const [deleteTarget, setDeleteTarget] = useState("");
 
   const handleDelete = (action: Action) => {
@@ -87,32 +88,57 @@ export const JobEditView = ({ jobs, degrees, user, orientations }: Props) => {
     setDeleteTarget(jobId);
     setIsConfirming(true);
   };
+
+  const handleEditTargetChange = (job: Job) => {
+    setEditTarget(job);
+    window.scrollTo(0, 0);
+  };
   //#endregion
 
   return (
     <Container style={{ marginTop: "2em" }}>
-      <Header as="h1">Lisää uusi tettipaikka</Header>
-      <JobAddForm degrees={degrees} user={user} orientations={orientations} />
+      <Header as="h1">
+        {editTarget ? "Muokkaa tettipaikkaa" : "Lisää tettipaikka"}
+      </Header>
+      {editTarget && (
+        <Message warning>
+          <p>
+            Olet muokkaamassa tettipaikkaa {editTarget?.title} yrityksessä{" "}
+            {editTarget?.companyName}
+          </p>
+          <Button
+            color="green"
+            content="Haluan lisätä uuden tettipaikan"
+            onClick={() => setEditTarget(undefined)}
+          ></Button>
+        </Message>
+      )}
+      <JobAddForm
+        degrees={degrees}
+        user={user}
+        orientations={orientations}
+        currentJob={editTarget}
+        setEditTarget={setEditTarget}
+      />
       <Divider />
       <Header as="h1">Omat listatut tettipaikat</Header>
       {state.length !== 0 ? (
-        state.map((job: any, idx: number) => (
-          <Segment key={job.id}>
+        state.map((job: Job, idx: number) => (
+          <Segment key={job._id}>
             <Header as="h1">{job.title}</Header>
             <Divider />
-            <p>{job.description}</p>
+            <p>{job.body.description}</p>
             <Button.Group fluid>
               <Button
                 color="blue"
-                as={Link}
-                to={`/paikka?id=${job.id}`}
-                content="Katsele paikkaa"
-                icon="search"
+                onClick={(e: any) => handleEditTargetChange(job)}
+                content="Muokkaa paikkaa"
+                icon="edit"
               />
               <Button.Or text="tai" />
               <Button
                 color="red"
-                onClick={(e: any) => handleShowConfirm(job.id)}
+                onClick={(e: any) => handleShowConfirm(job._id)}
                 content="Poista tämä tettipaikka"
                 icon="trash"
               />

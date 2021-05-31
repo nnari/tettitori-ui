@@ -44,7 +44,7 @@ export const JobListItem = ({ job, descriptionPreviewLength = 300 }: Props) => {
         {/* <ActivityOrientationLabelGroup
           activityOrientations={job.relevantOrientations}
         /> */}
-        <DegreeLabelGroup degrees={job.relevantDegrees} limit={100} />
+        {/* <DegreeLabelGroup degrees={job.relevantDegrees} limit={100} /> */}
 
         {/* Add as favorite */}
         {/* <Button.Group fluid style={{ marginTop: "1em" }}>
